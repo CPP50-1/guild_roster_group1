@@ -69,6 +69,22 @@ class Item:
             return NotImplemented
         return (self.rarity, self.value) < (other.rarity, other.value)
 
+    def __gt__(self, other: object) -> bool:
+        if not isinstance(other, Item):
+            return NotImplemented
+        return (self.rarity, self.value) > (other.rarity, other.value)
+
+    def __le__(self, other: object) -> bool:
+        if not isinstance(other, Item):
+            return NotImplemented
+        return (self.rarity, self.value) <= (other.rarity, other.value)
+
+    def __ge__(self, other: object) -> bool:
+        if not isinstance(other, Item):
+            return NotImplemented
+        return (self.rarity, self.value) >= (other.rarity, other.value)
+
+
     def __bool__(self) -> bool:
         return self.value != 0
 
