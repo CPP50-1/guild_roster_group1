@@ -83,24 +83,42 @@ class Character:
         raise NotImplementedError("TODO (Day 1): implement Character.__str__")
 
     def __eq__(self, other: object) -> bool:
-        """TODO (Day 1): two Characters are equal when they're the same
-        concrete type, AND have the same name AND the same level.
-        """
-        raise NotImplementedError("TODO (Day 1): implement Character.__eq__")
+        if not isinstance(other, Character):
+            return NotImplemented
+        
+        return (isinstance(type(other), type(self))
+                and self.name == other.name 
+                and self.level == other.level)
 
     def __hash__(self) -> int:
-        """TODO (Day 1): must stay consistent with __eq__ above."""
-        raise NotImplementedError("TODO (Day 1): implement Character.__hash__")
+        return hash(type(self) and self.name and self.level)
 
     def __lt__(self, other: object) -> bool:
-        """TODO (Day 1): order by level — this is what lets a Roster
-        (Day 2) be sorted() directly with no key= needed.
-        """
-        raise NotImplementedError("TODO (Day 1): implement Character.__lt__")
+        if not isinstance(other, Character):
+            return NotImplemented
+        
+        return self.level < other.level
+    
+    def __gt__(self, other):
+        if not isinstance(other, Character):
+            return NotImplemented
+
+        return self.level > other.level
+    
+    def __le__(self, other):
+        if not isinstance(other, Character):
+            return NotImplemented
+
+        return self.level <= other.level
+    
+    def __ge__(self, other):
+        if not isinstance(other, Character):
+            return NotImplemented
+
+        return self.level >= other.level
 
     def __bool__(self) -> bool:
-        """TODO (Day 1): a character is "truthy" while alive (hp > 0)."""
-        raise NotImplementedError("TODO (Day 1): implement Character.__bool__")
+        return self.hp > 0
 
 
 class Warrior(Character):
