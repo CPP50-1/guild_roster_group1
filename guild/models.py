@@ -91,7 +91,7 @@ class Character:
                 and self.level == other.level)
 
     def __hash__(self) -> int:
-        return hash(type(self) and self.name and self.level)
+        return hash((type(self), self.name, self.level))
 
     def __lt__(self, other: object) -> bool:
         if not isinstance(other, Character):
