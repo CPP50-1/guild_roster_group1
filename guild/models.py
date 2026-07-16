@@ -74,7 +74,7 @@ class Character:
         return f"{type(self).__name__}(name='{self.name}', level={self.level}, hp={self.hp})"
 
     def __str__(self) -> str:
-        return f"{self.name} the {type(self).__name__} (Lv.{self.level}, {self.hp} HP)"
+        return f"{self.name} the {self.describe_role()} (Lv.{self.level}, {self.hp} HP)"
 
     def __eq__(self, other: object) -> bool:
         """TODO (Day 1): two Characters are equal when they're the same
