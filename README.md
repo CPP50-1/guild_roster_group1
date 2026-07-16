@@ -15,7 +15,7 @@ python -m pytest -v
 ```
 
 Right now, **40 tests fail and 11 pass**, that's the expected starting
-point, not a bug. The 11 that pass exercise infrastructure that's already
+point, not a bug. The gfgsfgsgsg11 that pass exercise infrastructure that's already
 given (see below). As you fill in TODOs, more should go green.
 
 ## What's given vs. what's a TODO
