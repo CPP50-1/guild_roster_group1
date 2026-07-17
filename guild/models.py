@@ -80,7 +80,7 @@ class Character:
         if not isinstance(other, Character):
             return NotImplemented
 
-        return (isinstance(other, type(self))
+        return (type(other) == type(self)
                 and self.name == other.name 
                 and self.level == other.level)
 
