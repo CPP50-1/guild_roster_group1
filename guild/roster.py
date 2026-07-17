@@ -126,7 +126,7 @@ class Roster:
         del self._characters[index]
 
     def __contains__(self, item: Character) -> bool:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__contains__")
+        return item in self._characters
 
     def __len__(self) -> int:
         raise NotImplementedError("TODO (Day 2): implement Roster.__len__")
