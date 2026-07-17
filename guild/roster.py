@@ -31,30 +31,31 @@ class OrderedSet:
             self.add(item)
 
     def add(self, item: Any) -> None:
-        """TODO (Day 2): add item, no-op if it's already present."""
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.add")
+        if not item in self._data:
+            self._data.update({item:None})
 
     def discard(self, item: Any) -> None:
-        """TODO (Day 2): remove item if present; do nothing if it isn't."""
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.discard")
+        if item in self._data:
+            del self._data[item]
 
     def __contains__(self, item: Any) -> bool:
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.__contains__")
+        return item in self._data
 
     def __iter__(self) -> Iterator[Any]:
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.__iter__")
+        for item, value in self._data.items():
+            yield item
 
     def __len__(self) -> int:
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.__len__")
+        return len(self._data)
 
     def __repr__(self) -> str:
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.__repr__")
+        return repr(self._data)
 
     def __eq__(self, other: object) -> bool:
-        """TODO (Day 2): two OrderedSets are equal if they contain the
-        same items in the same order.
-        """
-        raise NotImplementedError("TODO (Day 2): implement OrderedSet.__eq__")
+        if not isinstance(other, OrderedSet):
+            return NotImplemented
+        
+        return self._data == other._data
 
 
 # --- Dev B: memoized callable ------------------------------------------------
