@@ -117,8 +117,10 @@ class Roster:
         return self._characters[index]
 
     def __setitem__(self, index: int, value: Character) -> None:
-        """TODO (Day 2): reject non-Character values with a TypeError."""
-        raise NotImplementedError("TODO (Day 2): implement Roster.__setitem__")
+        if not isinstance(value, Character):
+            raise TypeError("Roster can only contain Character objects")
+
+        self._characters[index] = value
 
     def __delitem__(self, index: int) -> None:
         raise NotImplementedError("TODO (Day 2): implement Roster.__delitem__")
