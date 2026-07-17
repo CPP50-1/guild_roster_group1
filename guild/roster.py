@@ -132,11 +132,7 @@ class Roster:
         return len(self._characters)
 
     def __iter__(self) -> RosterIterator:
-        """TODO (Day 2): return a RosterIterator over this roster's
-        characters — this is the connection between the container
-        protocol and the from-scratch iterator class above.
-        """
-        raise NotImplementedError("TODO (Day 2): implement Roster.__iter__")
+        return RosterIterator(characters=self._characters)
 
     def __repr__(self) -> str:
         raise NotImplementedError("TODO (Day 2): implement Roster.__repr__")
