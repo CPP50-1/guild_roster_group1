@@ -114,30 +114,28 @@ class Roster:
         self._characters: List[Character] = list(characters)
 
     def __getitem__(self, index: int) -> Character:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__getitem__")
+        return self._characters[index]
 
     def __setitem__(self, index: int, value: Character) -> None:
-        """TODO (Day 2): reject non-Character values with a TypeError."""
-        raise NotImplementedError("TODO (Day 2): implement Roster.__setitem__")
+        if not isinstance(value, Character):
+            raise TypeError("Roster can only contain Character objects")
+
+        self._characters[index] = value
 
     def __delitem__(self, index: int) -> None:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__delitem__")
+        del self._characters[index]
 
     def __contains__(self, item: Character) -> bool:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__contains__")
+        return item in self._characters
 
     def __len__(self) -> int:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__len__")
+        return len(self._characters)
 
     def __iter__(self) -> RosterIterator:
-        """TODO (Day 2): return a RosterIterator over this roster's
-        characters — this is the connection between the container
-        protocol and the from-scratch iterator class above.
-        """
-        raise NotImplementedError("TODO (Day 2): implement Roster.__iter__")
+        return RosterIterator(characters=self._characters)
 
     def __repr__(self) -> str:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__repr__")
+        return "\n".join(repr(c) for c in self._characters)
 
     def add(self, character: Character) -> None:
         raise NotImplementedError("TODO (Day 2): implement Roster.add")
