@@ -123,7 +123,7 @@ class Roster:
         self._characters[index] = value
 
     def __delitem__(self, index: int) -> None:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__delitem__")
+        del self._characters[index]
 
     def __contains__(self, item: Character) -> bool:
         raise NotImplementedError("TODO (Day 2): implement Roster.__contains__")
