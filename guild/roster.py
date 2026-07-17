@@ -129,7 +129,7 @@ class Roster:
         return item in self._characters
 
     def __len__(self) -> int:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__len__")
+        return len(self._characters)
 
     def __iter__(self) -> RosterIterator:
         """TODO (Day 2): return a RosterIterator over this roster's
