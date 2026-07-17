@@ -71,7 +71,7 @@ class StatCalculator:
 
     def __call__(self, character: Character, difficulty: int) -> int:
         self.calls += 1
-        key = (type(character).__name__, character.level, difficulty)
+        key = (str(type(character)), character.level, difficulty)
         if key in self._cache:
             self.cache_hits += 1
             return self._cache[key]
