@@ -114,7 +114,7 @@ class Roster:
         self._characters: List[Character] = list(characters)
 
     def __getitem__(self, index: int) -> Character:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__getitem__")
+        return self._characters[index]
 
     def __setitem__(self, index: int, value: Character) -> None:
         """TODO (Day 2): reject non-Character values with a TypeError."""
