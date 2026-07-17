@@ -135,7 +135,7 @@ class Roster:
         return RosterIterator(characters=self._characters)
 
     def __repr__(self) -> str:
-        raise NotImplementedError("TODO (Day 2): implement Roster.__repr__")
+        return "\n".join(repr(c) for c in self._characters)
 
     def add(self, character: Character) -> None:
         raise NotImplementedError("TODO (Day 2): implement Roster.add")
