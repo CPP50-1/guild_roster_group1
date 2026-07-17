@@ -70,15 +70,14 @@ class StatCalculator:
         self.cache_hits = 0
 
     def __call__(self, character: Character, difficulty: int) -> int:
-        """TODO (Day 2): build a cache key from (type name, level,
-        difficulty). If it's already in self._cache, increment
-        self.cache_hits and return the cached value. Otherwise compute a
-        result (any deterministic formula is fine — e.g.
-        (character.level * 7 + difficulty * 13) % 100), store it in the
-        cache, and return it. Increment self.calls every time this is
-        called, regardless of hit or miss.
-        """
-        raise NotImplementedError("TODO (Day 2): implement StatCalculator.__call__")
+        self.calls += 1
+        key = (str(type(character)), character.level, difficulty)
+        if key in self._cache:
+            self.cache_hits += 1
+            return self._cache[key]
+        result = (character.level * 7 + difficulty * 13) % 100
+        self._cache[key] = result
+        return result
 
 
 # --- Dev C: full container protocol + iterator protocol from scratch -------
@@ -94,14 +93,14 @@ class RosterIterator:
         self._index = 0
 
     def __iter__(self) -> "RosterIterator":
-        """TODO (Day 2): an iterator must be iterable (return itself)."""
-        raise NotImplementedError("TODO (Day 2): implement RosterIterator.__iter__")
+        return self
 
     def __next__(self) -> Character:
-        """TODO (Day 2): return the next character, advance the index,
-        raise StopIteration once you've gone past the end.
-        """
-        raise NotImplementedError("TODO (Day 2): implement RosterIterator.__next__")
+        self._index += 1
+        if self._index >= len(self._characters):
+            raise StopIteration
+        character = self._characters[self._index]
+        return character
 
 
 class Roster:
@@ -109,7 +108,6 @@ class Roster:
     protocol: indexing, assignment, deletion, membership, length, and
     iteration.
     """
-
     def __init__(self, characters: Iterator[Character] = ()):
         self._characters: List[Character] = list(characters)
 
@@ -138,19 +136,12 @@ class Roster:
         return "\n".join(repr(c) for c in self._characters)
 
     def add(self, character: Character) -> None:
-        raise NotImplementedError("TODO (Day 2): implement Roster.add")
+        self._characters.append(character)
 
     def alive_characters(self) -> Iterator[Character]:
-        """TODO (Day 2): a generator (use `yield`) that yields only the
-        characters that are currently "truthy" (relies on Character's
-        __bool__ from Day 1). Compare, once done, how much shorter this
-        is than RosterIterator above — same protocol, very different
-        amount of code.
-        """
-        raise NotImplementedError("TODO (Day 2): implement Roster.alive_characters")
-
+        for character in self._characters:
+            if character:
+                yield character
+                
     def sorted_by_level(self) -> List[Character]:
-        """TODO (Day 2): return characters sorted by level. Should need
-        no key= argument at all if Character.__lt__ (Day 1) is correct.
-        """
-        raise NotImplementedError("TODO (Day 2): implement Roster.sorted_by_level")
+        return sorted(self._characters)
