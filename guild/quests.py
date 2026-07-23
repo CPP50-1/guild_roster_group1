@@ -48,11 +48,7 @@ def endless_bounty_quests() -> Iterator[Quest]:
 
 
 def first_n_bounties(n: int) -> List[Quest]:
-    """TODO: use itertools.islice to pull exactly n items from
-    endless_bounty_quests() without ever asking it to produce more than
-    that.
-    """
-    raise NotImplementedError("TODO (Day 3): implement first_n_bounties")
+    return list(itertools.islice(endless_bounty_quests(), n))
 
 
 # --- TODO (Day 3): itertools.takewhile ---------------------------------------
