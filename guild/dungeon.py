@@ -68,4 +68,10 @@ def guild_transaction(treasury: Dict[str, int]) -> Iterator[Dict[str, int]]:
         suppress it. (Suppressing would mean *not* re-raising; that would
         be the wrong choice here, and worth being able to explain why.)
     """
-    raise NotImplementedError("TODO (Day 3): implement guild_transaction")
+    treasury_copy = treasury.copy()
+    try:
+        yield treasury
+    except Exception:
+        treasury.clear()
+        treasury.update(treasury_copy)
+        raise
