@@ -54,20 +54,6 @@ def dungeon_floors(dungeon_log: List[str]) -> Iterator[Dict]:
 
 @contextmanager
 def guild_transaction(treasury: Dict[str, int]) -> Iterator[Dict[str, int]]:
-    """TODO: simulates a database transaction over an in-memory treasury
-    dict — mutations inside the `with` block are kept if the block
-    completes without error, and rolled back to the pre-block snapshot if
-    it raises.
-
-    Requirements:
-      - Take a snapshot (a copy) of `treasury` before yielding it.
-      - `yield treasury` so the caller can mutate it directly inside the
-        `with` block.
-      - If an exception occurs inside the block, restore `treasury` to
-        the snapshot's contents, then re-raise the exception — do NOT
-        suppress it. (Suppressing would mean *not* re-raising; that would
-        be the wrong choice here, and worth being able to explain why.)
-    """
     treasury_copy = treasury.copy()
     try:
         yield treasury
