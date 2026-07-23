@@ -13,8 +13,6 @@ from contextlib import contextmanager
 from typing import Dict, Iterator, List
 
 
-# --- TODO (Day 3): yield-from delegation + lazy infinite sequence ----------
-
 def floor_encounters(floor_number: int, dungeon_log: List[str]) -> Iterator[Dict]:
     dungeon_log.append(f"Entering floor {floor_number}")
     try:
@@ -48,9 +46,6 @@ def dungeon_floors(dungeon_log: List[str]) -> Iterator[Dict]:
     finally:
             dungeon_log.append("Dungeon generator closed.")
 
-
-
-# --- TODO (Day 3): guild treasury transaction --------------------------------
 
 @contextmanager
 def guild_transaction(treasury: Dict[str, int]) -> Iterator[Dict[str, int]]:
