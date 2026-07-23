@@ -37,15 +37,14 @@ def combined_quest_feed() -> Iterator[Quest]:
         event_quests(),
     )
 
-# --- TODO (Day 3): an infinite source + itertools.islice --------------------
 
 def endless_bounty_quests() -> Iterator[Quest]:
-    """TODO: an intentionally infinite generator (use itertools.count) —
-    bounty postings that never stop being generated, with a slowly
-    increasing reward, e.g. reward_gold = 10 + i * 5 and
-    min_level = 1 + i // 3 for i starting at 1.
-    """
-    raise NotImplementedError("TODO (Day 3): implement endless_bounty_quests")
+    for i in itertools.count(start=1):
+        yield {
+            "name": f"Bounty Contract #{i}",
+            "reward_gold": 10 + i * 5,
+            "min_level": 1 + i // 3,
+        }
 
 
 def first_n_bounties(n: int) -> List[Quest]:
