@@ -16,23 +16,6 @@ from typing import Dict, Iterator, List
 # --- TODO (Day 3): yield-from delegation + lazy infinite sequence ----------
 
 def floor_encounters(floor_number: int, dungeon_log: List[str]) -> Iterator[Dict]:
-    """TODO: one floor's worth of encounters.
-
-    Requirements:
-      - Append "Entering floor N" to dungeon_log at the start.
-      - Build a small list of encounter dicts for this floor (a monster
-        and a loot chest at minimum; add a trap every 3rd floor — your
-        call on the exact shape, keep it consistent with dungeon_floors
-        below and with the tests).
-      - For each encounter: `action = yield encounter`. If action ==
-        "retreat", append a log line and `return "retreated"` immediately.
-      - If the loop finishes without a retreat, append a "cleared" log
-        line and `return "cleared"`.
-      - Wrap the body in try/finally, appending a "Leaving floor N" log
-        line in the finally block — this needs to run whether the floor
-        ends via retreat, via clearing it, or via the caller closing the
-        whole dungeon mid-floor.
-    """
     dungeon_log.append(f"Entering floor {floor_number}")
     try:
         encounters = [
@@ -51,8 +34,6 @@ def floor_encounters(floor_number: int, dungeon_log: List[str]) -> Iterator[Dict
         return "cleared"
     finally:
         dungeon_log.append(f"Leaving floor {floor_number}")
-
-    raise NotImplementedError("TODO (Day 3): implement floor_encounters")
 
 
 def dungeon_floors(dungeon_log: List[str]) -> Iterator[Dict]:
