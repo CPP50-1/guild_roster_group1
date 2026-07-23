@@ -28,7 +28,7 @@ def floor_encounters(floor_number: int, dungeon_log: List[str]) -> Iterator[Dict
         for encounter in encounters:
             action = yield encounter
             if action == "retreat":
-                dungeon_log.append(f"Retreat - floor {floor_number}")
+                dungeon_log.append(f"retreats mid-floor {floor_number}")
                 return "retreated"
         dungeon_log.append("Cleared")
         return "cleared"
@@ -37,24 +37,17 @@ def floor_encounters(floor_number: int, dungeon_log: List[str]) -> Iterator[Dict
 
 
 def dungeon_floors(dungeon_log: List[str]) -> Iterator[Dict]:
-    """TODO: an intentionally endless generator — there is no fixed last
-    floor, only a floor the party chooses to stop at.
+    floor_number = 0
+    try:
+        while True:
+            floor_number += 1
+            result = yield from floor_encounters(floor_number, dungeon_log)
+            if result == "retreated":
+                dungeon_log.append("Party returns to town.")
+                return
+    finally:
+            dungeon_log.append("Dungeon generator closed.")
 
-    Requirements:
-      - Loop forever, incrementing a floor_number each iteration.
-      - Delegate to floor_encounters via `yield from` — capture its
-        return value (`result = yield from floor_encounters(...)`).
-        This is what lets you find out *why* the floor ended (cleared vs.
-        retreated) without any extra signalling mechanism — yield from
-        forwards every .send() call through to the sub-generator AND
-        surfaces its return value once it's exhausted.
-      - If the result is "retreated", log a "returns to town" line and
-        `return` (ending the whole dungeon run).
-      - Wrap the while loop in try/finally, logging "Dungeon generator
-        closed." in the finally block — reached both by the `return`
-        above and by GeneratorExit (i.e. the caller calling .close()).
-    """
-    raise NotImplementedError("TODO (Day 3): implement dungeon_floors")
 
 
 # --- TODO (Day 3): guild treasury transaction --------------------------------
