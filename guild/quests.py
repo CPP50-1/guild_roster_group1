@@ -51,19 +51,10 @@ def first_n_bounties(n: int) -> List[Quest]:
     return list(itertools.islice(endless_bounty_quests(), n))
 
 
-# --- TODO (Day 3): itertools.takewhile ---------------------------------------
-
 def quests_under_budget(quests: Iterable[Quest], budget: int) -> List[Quest]:
-    """TODO: sort `quests` by reward_gold ascending, then use
-    itertools.takewhile to collect quests while reward_gold < budget.
+    sorted_quests = sorted(quests, key=lambda q: q["reward_gold"])
 
-    Think carefully about why the sort has to happen first: takewhile
-    stops at the *first* item that fails the predicate, unlike filter()
-    which checks every item. Skipping the sort would silently produce a
-    wrong (too-short) result rather than an error — worth testing that
-    failure mode yourself once, deliberately, before moving on.
-    """
-    raise NotImplementedError("TODO (Day 3): implement quests_under_budget")
+    return list(itertools.takewhile(lambda q: q["reward_gold"] < budget, sorted_quests))
 
 
 # --- TODO (Day 3): itertools.groupby -----------------------------------------
