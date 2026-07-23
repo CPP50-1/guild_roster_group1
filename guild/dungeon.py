@@ -33,6 +33,25 @@ def floor_encounters(floor_number: int, dungeon_log: List[str]) -> Iterator[Dict
         ends via retreat, via clearing it, or via the caller closing the
         whole dungeon mid-floor.
     """
+    dungeon_log.append(f"Entering floor {floor_number}")
+    try:
+        encounters = [
+            {"type": "monster", "floor": floor_number},
+            {"type": "loot_chest", "floor": floor_number},
+        ]
+        if floor_number % 3 == 0:
+            encounters.append({"type": "trap", "floor": floor_number})
+
+        for encounter in encounters:
+            action = yield encounter
+            if action == "retreat":
+                dungeon_log.append(f"Retreat - floor {floor_number}")
+                return "retreated"
+        dungeon_log.append("Cleared")
+        return "cleared"
+    finally:
+        dungeon_log.append(f"Leaving floor {floor_number}")
+
     raise NotImplementedError("TODO (Day 3): implement floor_encounters")
 
 
