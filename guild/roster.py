@@ -97,10 +97,10 @@ class RosterIterator:
         return self
 
     def __next__(self) -> Character:
-        self._index += 1
         if self._index >= len(self._characters):
             raise StopIteration
         character = self._characters[self._index]
+        self._index += 1
         return character
 
 
