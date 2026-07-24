@@ -24,38 +24,43 @@ class AmbushError(GuildError):
 
 
 def battle(
-    character: Character,
-    combat_log: List[str],
-    enemy_name: str = "Goblin",
-    enemy_hp: int = 30,
-    enemy_attack: int = 5,
+        character: Character,
+        combat_log: List[str],
+        enemy_name: str = "Goblin",
+        enemy_hp: int = 30,
+        enemy_attack: int = 5,
 ) -> Generator[Dict, str, None]:
-    """TODO (Day 3): a generator-based combat loop.
+    try:
+        combat_log.append(f"{enemy_name} appears!")
 
-    Requirements:
-      - Append a "X appears!" style line to combat_log at the start.
-      - Loop while both character_hp and enemy_hp are above 0. Each
-        iteration: `action = yield {...state snapshot...}`, then handle
-        action in ("attack", "heal", "flee") plus a fallback for unknown
-        actions. "attack" reduces enemy_hp; "heal" restores some
-        character_hp (capped at character.base_hp * character.level);
-        "flee" should `return` immediately (ending the generator).
-      - After a successful attack, if the enemy is still alive, it hits
-        back (reduce character_hp by enemy_attack).
-      - When the loop ends naturally (someone hit 0 hp), yield one final
-        state dict with an "outcome" key ("victory" or "defeat").
-      - Wrap the whole thing in try/except AmbushError: catching an
-        ambush thrown in via .throw() should apply damage and yield a
-        state dict with "ambushed": True.
-      - Use `finally` to append a "Combat generator closed." line to
-        combat_log — this must run whether the generator ends via
-        `return`, naturally, or via .close() (which raises GeneratorExit
-        at the suspended yield point). Do not `yield` from inside a
-        finally block that's handling GeneratorExit — that will raise a
-        RuntimeError.
+        while enemy_hp > 0 and character:
+            snapshot = {"character_hp": character.hp, "enemy_hp": enemy_hp}
+            action = yield snapshot
+            match action:
+                case "attack":
+                    enemy_hp -= 10
+                    combat_log.append(f"{character.name} hits {enemy_name}")
+                case "flee":
+                    combat_log.append("flees")
+                    return
+                case "heal":
+                    max_health = character.base_hp * character.level
+                    character.hp += 15
+                    character.hp = min(character.hp, max_health)
+                    combat_log.append(f"{character.name} healed")
+                case _:
+                    combat_log.append(f"{action} is not valid action")
+            if enemy_hp > 0:
+                character.hp -= enemy_attack
+                combat_log.append(f"{enemy_name} hits {character.name}")
+            combat_log.append(f"character_hp : {character.hp}")
+            combat_log.append(f"enemy_hp : {enemy_hp}")
 
-    `combat_log` is a list supplied by the caller (not returned) because
-    generator locals disappear once the frame ends — this is why the log
-    needs to live outside the generator itself.
-    """
-    raise NotImplementedError("TODO (Day 3): implement battle()")
+        yield {"outcome": "victory" if character.hp > 0 else "defeat"}
+
+    except AmbushError:
+        combat_log.append(f"Ambush!")
+        yield {"ambushed": True}
+
+    finally:
+        combat_log.append("Combat generator closed.")
