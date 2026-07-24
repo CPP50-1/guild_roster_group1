@@ -161,23 +161,13 @@ class HealerMixin:
 
 
 class TankMixin:
-    """TODO (Day 4): adds taunt/aggro behavior.
-
-    describe_role() must call super().describe_role() and append
-    " + Tank" — same cooperative-chain requirement as HealerMixin above.
-
-    taunt(enemies): for this exercise, a simplified placeholder is fine —
-    e.g. just return list(enemies). The mechanism (MRO), not combat
-    balance, is the point.
-    """
-
     taunt_radius: int = 3
 
     def describe_role(self) -> str:
-        raise NotImplementedError("TODO (Day 4): implement TankMixin.describe_role")
+        return super().describe_role() + " + Tank"
 
     def taunt(self, enemies) -> list:
-        raise NotImplementedError("TODO (Day 4): implement TankMixin.taunt")
+        return list(enemies)
 
 
 class Paladin(HealerMixin, TankMixin, Warrior):
