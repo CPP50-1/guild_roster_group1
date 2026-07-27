@@ -81,7 +81,7 @@ class Character:
             return NotImplemented
 
         return (type(other) == type(self)
-                and self.name == other.name 
+                and self.name == other.name
                 and self.level == other.level)
 
     def __hash__(self) -> int:
@@ -90,21 +90,21 @@ class Character:
     def __lt__(self, other: object) -> bool:
         if not isinstance(other, Character):
             return NotImplemented
-        
+
         return self.level < other.level
-    
+
     def __gt__(self, other):
         if not isinstance(other, Character):
             return NotImplemented
 
         return self.level > other.level
-    
+
     def __le__(self, other):
         if not isinstance(other, Character):
             return NotImplemented
 
         return self.level <= other.level
-    
+
     def __ge__(self, other):
         if not isinstance(other, Character):
             return NotImplemented
@@ -154,10 +154,13 @@ class HealerMixin:
     heal_power: int = 5
 
     def describe_role(self) -> str:
-        raise NotImplementedError("TODO (Day 4): implement HealerMixin.describe_role")
+        return super().describe_role() + " + Healer"
 
     def heal(self, target: "Character", amount: int = None) -> int:
-        raise NotImplementedError("TODO (Day 4): implement HealerMixin.heal")
+        max_hp = target.base_hp * target.level
+        healed_hp = target.hp + (self.heal_power if amount == None else amount)
+
+        return min(healed_hp, max_hp)
 
 
 class TankMixin:
