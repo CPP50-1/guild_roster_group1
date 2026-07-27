@@ -112,4 +112,4 @@ class FloatField(Validated):
     """
 
     def __init__(self, required: bool = True, minimum: Optional[float] = None, maximum: Optional[float] = None):
-        raise NotImplementedError("TODO (Day 4): implement FloatField.__init__")
+        super().__init__(expected_type=float|int,required=required,minimum=float(minimum),maximum=float(maximum))
