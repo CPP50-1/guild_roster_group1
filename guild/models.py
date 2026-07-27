@@ -48,10 +48,7 @@ class GuildMeta(type):
     def __new__(mcs, name, bases, namespace, **kwargs):
         raise NotImplementedError("TODO (Day 5): implement GuildMeta.__new__")
 
-
-# TODO (Day 5, last step): once GuildMeta works, change the line below to:
-#     class Character(metaclass=GuildMeta):
-class Character:
+class Character(metaclass=GuildMeta):
     """Base class for every playable character."""
 
     name = StringField(max_length=50)
