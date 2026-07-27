@@ -24,29 +24,20 @@ from .fields import IntField, StringField
 
 
 class GuildMeta(type):
-    """TODO (Day 5): a metaclass that automatically registers every
-    concrete Character subclass by name — direct analogue of how Odoo's
-    ORM collects model classes into its model registry at class-creation
-    time, not at instantiation time.
-
-    Two things your __new__ needs to do, after creating the class via
-    super().__new__(...):
-      1. Skip registration for the base Character class itself (it has no
-         `bases`, i.e. `bases == ()`).
-      2. For every other (concrete) subclass: validate that it has an int
-         `base_hp` class attribute (directly or inherited) — raise
-         TypeError if not — then add it to `GuildMeta.registry` keyed by
-         class name.
-
-    Once this works, go to the bottom of this file and change
-    `class Character:` to `class Character(metaclass=GuildMeta):` — the
-    registry is useless to Character until that line changes.
-    """
 
     registry: Dict[str, Type["Character"]] = {}
 
     def __new__(mcs, name, bases, namespace, **kwargs):
-        raise NotImplementedError("TODO (Day 5): implement GuildMeta.__new__")
+        new = super().__new__(mcs, name, bases, namespace, **kwargs)
+
+        if bases == ():
+            return new
+
+        if not isinstance(getattr(new, "base_hp", None), int):
+            raise TypeError(f"{name} must define an int base_hp")
+
+        mcs.registry[name] = new
+        return new
 
 
 # TODO (Day 5, last step): once GuildMeta works, change the line below to:
