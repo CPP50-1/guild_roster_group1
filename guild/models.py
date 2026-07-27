@@ -51,7 +51,7 @@ class GuildMeta(type):
 
 # TODO (Day 5, last step): once GuildMeta works, change the line below to:
 #     class Character(metaclass=GuildMeta):
-class Character:
+class Character(metaclass=GuildMeta):
     """Base class for every playable character."""
 
     name = StringField(max_length=50)
