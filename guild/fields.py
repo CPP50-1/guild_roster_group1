@@ -104,12 +104,5 @@ class IntField(Validated):
 
 
 class FloatField(Validated):
-    """TODO (Day 4): implement this the same way IntField is implemented
-    above, but accepting float values. Remember that in Python, an int
-    passed where a float is expected is usually fine (3 is a valid
-    "float-ish" value) — decide whether you want to accept plain ints too,
-    and document your choice.
-    """
-
     def __init__(self, required: bool = True, minimum: Optional[float] = None, maximum: Optional[float] = None):
         super().__init__(expected_type=float|int,required=required,minimum=float(minimum),maximum=float(maximum))

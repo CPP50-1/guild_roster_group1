@@ -139,18 +139,6 @@ class Rogue(Character):
 # --- Day 4 mixins: horizontal reuse without deep inheritance ---------------
 
 class HealerMixin:
-    """TODO (Day 4, Dev A/whoever owns this): adds healing behavior.
-
-    describe_role() must call super().describe_role() and append
-    " + Healer" to whatever it returns — this is deliberate: it's one
-    half of the cooperative MRO chain exercised by Paladin below. Do not
-    hard-code a return value; the whole point breaks if you do.
-
-    heal(target, amount=None): heals `target` by `amount` (or by
-    self.heal_power if amount is None), capped at target's max HP
-    (target.base_hp * target.level). Returns the target's new hp.
-    """
-
     heal_power: int = 5
 
     def describe_role(self) -> str:
@@ -158,7 +146,7 @@ class HealerMixin:
 
     def heal(self, target: "Character", amount: int = None) -> int:
         max_hp = target.base_hp * target.level
-        healed_hp = target.hp + (self.heal_power if amount == None else amount)
+        healed_hp = target.hp + (amount if amount else self.heal_power)
 
         return min(healed_hp, max_hp)
 
