@@ -60,7 +60,13 @@ def quests_under_budget(quests: Iterable[Quest], budget: int) -> List[Quest]:
 # --- TODO (Day 3): itertools.groupby -----------------------------------------
 
 def group_roster_by_role(characters: Iterable[Character]) -> Dict[str, List[Character]]:
-    return {key : list(group) for key,group in itertools.groupby(characters,key=lambda character:character.describe_role())} 
+    key = lambda character: character.describe_role()
+    sorted_characters = sorted(characters, key=key)
+
+    return {
+        role: list(group)
+        for role, group in itertools.groupby(sorted_characters, key=key)
+    }
 
 # --- TODO (Day 3): itertools.product -----------------------------------------
 
