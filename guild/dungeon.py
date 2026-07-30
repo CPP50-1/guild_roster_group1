@@ -52,7 +52,7 @@ def guild_transaction(treasury: Dict[str, int]) -> Iterator[Dict[str, int]]:
     treasury_copy = treasury.copy()
     try:
         yield treasury
-    except Exception:
+    except BaseException:
         treasury.clear()
         treasury.update(treasury_copy)
         raise
