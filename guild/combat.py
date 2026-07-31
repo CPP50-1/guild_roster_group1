@@ -51,7 +51,7 @@ def battle(
                 case _:
                     combat_log.append(f"{action} is not valid action")
             if enemy_hp > 0:
-                character.hp -= enemy_attack
+                character.hp = max(0, character.hp - enemy_attack)
                 combat_log.append(f"{enemy_name} hits {character.name}")
             combat_log.append(f"character_hp : {character.hp}")
             combat_log.append(f"enemy_hp : {enemy_hp}")
@@ -60,7 +60,7 @@ def battle(
 
     except AmbushError:
         ambush_damage = 15
-        character.hp -= ambush_damage
+        character.hp = max(0, character.hp - ambush_damage)
         combat_log.append("Ambush!")
         combat_log.append(f"{character.name} was ambushed and takes {ambush_damage} damage!")
         
