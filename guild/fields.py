@@ -104,5 +104,17 @@ class IntField(Validated):
 
 
 class FloatField(Validated):
-    def __init__(self, required: bool = True, minimum: Optional[float] = None, maximum: Optional[float] = None):
-        super().__init__(expected_type=float|int,required=required,minimum=float(minimum),maximum=float(maximum))
+    """A Validated shortcut for floats (and ints), with optional min/max bounds."""
+
+    def __init__(
+        self,
+        required: bool = True,
+        minimum: Optional[float] = None,
+        maximum: Optional[float] = None,
+    ):
+        super().__init__(
+            expected_type=(float, int),
+            required=required,
+            minimum=minimum,
+            maximum=maximum,
+        )
