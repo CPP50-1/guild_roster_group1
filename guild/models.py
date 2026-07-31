@@ -132,11 +132,14 @@ class HealerMixin:
     def describe_role(self) -> str:
         return super().describe_role() + " + Healer"
 
-    def heal(self, target: "Character", amount: int = None) -> int:
+    def heal(self, target: Character, amount: int | None = None) -> int:
         max_hp = target.base_hp * target.level
         healed_hp = target.hp + (amount if amount else self.heal_power)
 
-        return min(healed_hp, max_hp)
+        # Apply the bounded health back to the target's hp attribute
+        target.hp = min(healed_hp, max_hp)
+        
+        return target.hp
 
 
 class TankMixin:
