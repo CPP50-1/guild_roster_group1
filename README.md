@@ -18,6 +18,24 @@ Right now, **40 tests fail and 11 pass**, that's the expected starting
 point, not a bug. The 11 that pass exercise infrastructure that's already
 given (see below). As you fill in TODOs, more should go green.
 
+## Database Setup (Part 2)
+
+Before executing any of the database seeding scripts or HTML/CSS queries, you must spin up the local PostgreSQL instance and apply the structural schema.
+
+1.  **Start the database container:**
+    
+    ```
+    docker compose up -d
+    ```
+    
+2.  **Apply the schema (`schema.sql`):**
+    
+    ```
+    docker exec -i python_local_pg psql -U devuser -d guild_roster < schema.sql
+    ```
+    
+3.  **Environment setup:** Ensure you have installed the necessary database drivers (e.g., `pip install psycopg2-binary python-dotenv`). Copy the provided `.env.example` file, rename it to `.env`, and place it in the root of the repository so your scripts can securely access the database credentials.
+
 ## What's given vs. what's a TODO
 
 To avoid a chicken-and-egg problem (several later-day mechanisms are
