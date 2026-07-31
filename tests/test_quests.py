@@ -56,3 +56,21 @@ def test_product_eligible_assignments():
     # Sly (level 5) should be eligible for everything
     sly_pairs = [q for c, q in pairs if c.name == "Sly"]
     assert len(sly_pairs) == len(quests)
+
+def test_group_roster_by_role_unordered_input():
+    """Ensures group_roster_by_role groups correctly even if the input is not pre-sorted."""
+    unsorted_roster = [
+        Warrior(name="Grom"),
+        Mage(name="Jaina"),
+        Warrior(name="Garrosh"),
+        Rogue(name="Valeera"),
+        Mage(name="Khadgar")
+    ]
+    
+    grouped_roster = group_roster_by_role(unsorted_roster)
+    
+    # If the function failed to sort first, itertools.groupby would create 5 separate groups
+    assert len(grouped_roster.keys()) == 3, "Failed to group identical roles together"
+    assert len(grouped_roster["Warrior"]) == 2
+    assert len(grouped_roster["Mage"]) == 2
+    assert len(grouped_roster["Rogue"]) == 1

@@ -53,6 +53,16 @@ def test_dunder_bool_reflects_hp():
     w.hp = 0
     assert bool(w) is False
 
+def test_character_hash_stability_after_damage():
+    """Asserts that a character's hash remains identical before and after taking damage."""
+    grom = Warrior(name="Grom", level=2)
+    initial_hash = hash(grom)
+    
+    # Simulate combat damage
+    grom.hp -= 10
+    
+    # The hash must remain identical to ensure dictionary/set stability
+    assert hash(grom) == initial_hash
 
 def test_paladin_mro_order():
     assert Paladin.__mro__[:5] == (Paladin, HealerMixin, TankMixin, Warrior, Character)

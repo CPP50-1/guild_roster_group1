@@ -59,8 +59,17 @@ def battle(
         yield {"outcome": "victory" if character.hp > 0 else "defeat"}
 
     except AmbushError:
-        combat_log.append(f"Ambush!")
-        yield {"ambushed": True}
+        ambush_damage = 15
+        character.hp -= ambush_damage
+        combat_log.append("Ambush!")
+        combat_log.append(f"{character.name} was ambushed and takes {ambush_damage} damage!")
+        
+        # Yield the updated state including the applied damage
+        yield {
+            "ambushed": True,
+            "character_hp": character.hp,
+            "enemy_hp": enemy_hp
+        }
 
     finally:
         combat_log.append("Combat generator closed.")
